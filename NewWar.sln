@@ -6,10 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewWar", "NewWar\NewWar.vcxproj", "{EFF307C3-6C33-425F-8147-19D80C0E22D8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewWar_Server", "NewWar_Server\NewWar_Server.vcxproj", "{33ABD2DE-E55E-4C30-BCCE-8ADE2B2ACB08}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EFF307C3-6C33-425F-8147-19D80C0E22D8} = {EFF307C3-6C33-425F-8147-19D80C0E22D8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewWar_Client", "NewWar_Client\NewWar_Client.vcxproj", "{26373C78-4420-473D-877C-755F3AB3CAA2}"
 	ProjectSection(ProjectDependencies) = postProject
-		{33ABD2DE-E55E-4C30-BCCE-8ADE2B2ACB08} = {33ABD2DE-E55E-4C30-BCCE-8ADE2B2ACB08}
+		{EFF307C3-6C33-425F-8147-19D80C0E22D8} = {EFF307C3-6C33-425F-8147-19D80C0E22D8}
 	EndProjectSection
 EndProject
 Global
