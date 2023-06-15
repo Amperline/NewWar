@@ -147,10 +147,14 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="TestF.h" />
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="ConnectionData.h" />
+    <ClInclude Include="NewWarLib.h" />
+    <ClInclude Include="UseVariation.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="ConnectionData.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,14 +1,15 @@
 #include <iostream>
 
+#include <NewWar/NewWarLib.h>
 #include <SFML/Graphics.hpp>
 
 
 int main()
 {
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "NewWar", sf::Style::Fullscreen);
 
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    Animation MainMenu(&window, UseVariation::Imgs, "resource/images/MainMenu/MainMenu", 300, 12);
+    MainMenu.getSprite().setScale(6, 6);
 
     while (window.isOpen())
     {
@@ -18,15 +19,12 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        MainMenu.checkAnim();
 
         window.clear();
-        window.draw(shape);
+
+        MainMenu.draw();
         window.display();
     }
-
-
-
-
-
 	return 0;
 }
