@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "UseVariation.h"
 #include <vector>
@@ -8,6 +9,9 @@ class Animation
 protected:
 	sf::RenderWindow* m_window;
 	UseVariation useVariant;
+	sf::Image m_img;
+	sf::Texture m_txtr;
+
 	std::vector<sf::IntRect> m_frames;
 	std::vector<sf::Image> m_imgs;
 	std::vector<sf::Texture> m_txtrs;
@@ -15,8 +19,9 @@ protected:
 	sf::Clock m_frameTimer;
 	int timeSwitcher;
 public:
-	Animation(sf::RenderWindow* window,UseVariation usevariation, std::string fileName, int time_switcher, int valueOfImgs_Frames = 0);
-	void checkAnim();
+	Animation(sf::RenderWindow* window,UseVariation usevariation, std::string fileName, 
+		int time_switcher, int valueOfImgs_Frames = 0);
+	virtual void checkAnim();
 	virtual void draw();
 	sf::IntRect& getFramesRect(int index) { return m_frames[index]; }
 	sf::Sprite& getSprite() { return m_sprt; }

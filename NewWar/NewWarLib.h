@@ -1,3 +1,9 @@
 #pragma once
 #include "Animation.h"
+#include "Button.h"
+#include "Menu.h"
 #include "ConnectionData.h"
+#include "MenuStatus.h"
+#include "Field.h"
+#include "GameString.h"
+#include "Errorlog.h"
