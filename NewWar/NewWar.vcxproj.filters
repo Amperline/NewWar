@@ -13,11 +13,20 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\packets">
+      <UniqueIdentifier>{acdfc853-a2ce-4994-a751-71b931c40496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\packets">
+      <UniqueIdentifier>{3747184d-a224-439f-911e-82db51b2dcd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\ClientCon">
+      <UniqueIdentifier>{8a81e2a0-ed79-4722-8505-2e3401d0a2ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\ClientCon">
+      <UniqueIdentifier>{9d4e9bd0-7de2-479d-9ecb-f29f5acbd6b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConnectionData.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -45,11 +54,14 @@
     <ClInclude Include="Errorlog.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="ConnectorPacket.h">
+      <Filter>Файлы заголовков\packets</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientCon.h">
+      <Filter>Файлы заголовков\ClientCon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConnectionData.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -67,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="Errorlog.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientCon.cpp">
+      <Filter>Исходные файлы\ClientCon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

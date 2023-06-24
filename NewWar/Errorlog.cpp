@@ -4,7 +4,8 @@ void makeError(sf::RenderWindow* window, std::string str)
 {
     Menu menu(window, UseVariation::Imgs, "resource/images/MainMenu/MainMenu", 300, 12);
     Button b(window, "resource/images/Buttons/Button", 128 * 6, 86 * 6);
-    b.setupFont("OK", 20, 0);
+    b.setupFont("OK", 46, 0);
+    
 
     sf::Texture txtr;
     txtr.loadFromFile("resource/images/Error/ErrorLog.png");

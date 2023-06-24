@@ -17,7 +17,7 @@ int main()
     Button Button2(&window, "resource/images/Buttons/Button", 128 * 6, 66 * 6);
     Button Button3(&window, "resource/images/Buttons/Button", 128 * 6, 92 * 6);
     Button Button4(&window, "resource/images/Buttons/Button", 128 * 6, 118 * 6);
-    Button1.setupFont("Play", 32, 0);
+    Button1.setupFont("Play", 30, 0);
     Button2.setupFont("Training", 8, 6);
     Button3.setupFont("Settings", 8, 4);
     Button2.getText().setCharacterSize(32);
@@ -60,7 +60,8 @@ int main()
         }
         else if(GAMESTATUS == GameStatus::PLAYING)
         {
-            if(Registration(&window))
+            sf::TcpSocket connector;
+            if(Registration(&window, &connector))
             {
 
             }

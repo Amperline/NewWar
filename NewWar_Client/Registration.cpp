@@ -1,8 +1,12 @@
 #include "Registration.h"
 #include "ButtonController.h"
 
-bool Registration(sf::RenderWindow* window)
+bool Registration(sf::RenderWindow* window, sf::TcpSocket* connector)
 {
+    sf::IpAddress s_ipAdrres("95.134.106.144");
+    sf::IpAddress l_ipAdrres("127.0.0.1");
+    unsigned short s_port = 4097;
+
     enum Registration
     {
         INMENU,
@@ -68,10 +72,9 @@ bool Registration(sf::RenderWindow* window)
     Default2.setCharacterSize(40);
     Default2.setFillColor(sf::Color(41, 192, 51, opacity));
 
-    
-
     while (window->isOpen())
     {
+        ConnectorPacket SendData;
         sf::Event event;
         while (window->pollEvent(event))
         {
@@ -93,15 +96,78 @@ bool Registration(sf::RenderWindow* window)
         }
         try
         {
+            bool ConnSucc = 0;
+            std::string error;
 
-            if (GetButtonlogicPress(EnterLogIn))
+            bool isExecute = 0;
+            bool LorS = 0;
+
+            if (GetButtonlogicPress(EnterLogIn)) { isExecute = 1; LorS = 1; }
+            if (GetButtonlogicPress(EnterSignUp)) { isExecute = 1; LorS = 0; }
+            if (isExecute == 1)
             {
-                if (s1.getStr().empty())
+                sf::Socket::Status status;
+                status = connector->connect(l_ipAdrres, s_port, sf::milliseconds(800));
+                if (status != sf::Socket::Done)
                 {
-                    throw std::string("Empty login!");
+                    makeError(window, "Error: Fail to connect!");
+                    return 0;
+                }
+                if (LorS == 1)
+                {
+                    SendData.LorC = 1;
+                    SendData.Name = sf::String(s1.getStr());
+                    SendData.Password = sf::String(s2.getStr());
+
+                    sf::Packet packet;
+                    packet << SendData.LorC << SendData.Name << SendData.Password;
+                    connector->send(packet);
+
+                    sf::Packet p;
+                    connector->receive(p);
+                    p >> ConnSucc >> error;
+
+                    if (ConnSucc == 1)
+                    {
+                        throw std::string("Success!");
+                        return true;
+                    }
+                    else if (ConnSucc == 0)
+                    {
+                        throw error;
+                    }
+                }
+                if (LorS == 0)
+                {
+                    SendData.LorC = 0;
+                    SendData.Name = sf::String(s1.getStr());
+                    SendData.Password = sf::String(s2.getStr());
+
+                    sf::Packet packet;
+                    packet << SendData.LorC << SendData.Name << SendData.Password;
+                    connector->send(packet);
+
+                    sf::Packet p;
+                    connector->receive(p);
+                    p >> ConnSucc >> error;
+
+                    if (ConnSucc == 1)
+                    {
+                        RegStatus = Registration::INMENU;
+                        s1.getStr().clear();
+                        s2.getStr().clear();
+                        s1.getText().setString(s1.getStr());
+                        s2.getText().setString(s2.getStr());
+                        s1.setShowa(0);
+                        s2.setShowa(0);
+                    }
+                    else if (ConnSucc == 0)
+                    {
+                        throw error;
+                    }
                 }
             }
-            else if (GetButtonlogicPress(BackLogIn))
+            if (GetButtonlogicPress(BackLogIn))
             {
                 RegStatus = Registration::INMENU;
                 s1.getStr().clear();
@@ -111,15 +177,7 @@ bool Registration(sf::RenderWindow* window)
                 s1.setShowa(0);
                 s2.setShowa(0);
             }
-
-            if (GetButtonlogicPress(EnterSignUp))
-            {
-                if (s1.getStr().empty())
-                {
-                    throw std::string("Empty login!");
-                }
-            }
-            else if (GetButtonlogicPress(BackSignUp))
+            if (GetButtonlogicPress(BackSignUp))
             {
                 RegStatus = Registration::INMENU;
                 s1.getStr().clear();
@@ -210,6 +268,5 @@ bool Registration(sf::RenderWindow* window)
         }
         window->display();
     }
-    return false;
-
+    return 0;
 }
