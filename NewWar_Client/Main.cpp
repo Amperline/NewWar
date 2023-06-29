@@ -4,7 +4,10 @@
 #include <NewWar/NewWarLib.h>
 #include <SFML/Graphics.hpp>
 #include "Registration.h"
+#include "Training.h"
 #include "ButtonController.h"
+#include "Grass.h"
+
 
 GameStatus GAMESTATUS{GameStatus::IN_MENU};
 
@@ -23,6 +26,8 @@ int main()
     Button2.getText().setCharacterSize(32);
     Button3.getText().setCharacterSize(32);
     Button4.setupFont("Exit", 38, 0);
+
+    Grass grass(&window);
 
     while (window.isOpen())
     {
@@ -52,6 +57,7 @@ int main()
 
         if(GAMESTATUS == GameStatus::IN_MENU)
         {
+            Training(&window);
             MainMenu.checkAll();
             Button1.checkAll();
             Button2.checkAll();
@@ -69,7 +75,9 @@ int main()
         }
         else if (GAMESTATUS == GameStatus::TRAINING)
         {
-
+            Training(&window);
+            window.setView(window.getDefaultView());
+            GAMESTATUS = GameStatus::IN_MENU;
         }
         else if (GAMESTATUS == GameStatus::SETTINGS)
         {
@@ -94,14 +102,6 @@ int main()
             Button2.draw();
             Button3.draw();
             Button4.draw();
-        }
-        else if (GAMESTATUS == GameStatus::PLAYING)
-        {
-
-        }
-        else if (GAMESTATUS == GameStatus::TRAINING)
-        {
-
         }
         else if (GAMESTATUS == GameStatus::SETTINGS)
         {
