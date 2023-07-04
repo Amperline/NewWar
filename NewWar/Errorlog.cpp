@@ -8,7 +8,7 @@ void makeError(sf::RenderWindow* window, std::string str)
     
 
     sf::Texture txtr;
-    txtr.loadFromFile("resource/images/Error/ErrorLog.png");
+    txtr.loadFromFile("resource/images/Log/ErrorLog.png");
     sf::Sprite sprt;
     sprt.setTexture(txtr);
     sprt.setPosition(102 * 6, 53 * 6);

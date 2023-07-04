@@ -163,6 +163,7 @@
     <ClCompile Include="ButtonController.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Grass.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Registration.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="ButtonController.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Grass.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Registration.h" />
     <ClInclude Include="Training.h" />

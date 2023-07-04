@@ -48,6 +48,9 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Исходные файлы\Training</Filter>
     </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Исходные файлы\Training</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Registration.h">
@@ -72,6 +75,9 @@
       <Filter>Файлы заголовков\Training</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
+      <Filter>Файлы заголовков\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
       <Filter>Файлы заголовков\Training</Filter>
     </ClInclude>
   </ItemGroup>

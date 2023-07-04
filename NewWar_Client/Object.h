@@ -33,6 +33,10 @@ public:
 		sf::Vector2f scalePresent = sf::Vector2f(1, 1));
 	sf::Vector2i& getPosSet() { return m_posSet; }
 	void setObStat(ObjectStatus obstat) { ObStat = obstat; }
+	sf::Sprite& getSprite() { return m_sprt; }
+	sf::Sprite& getPresentSprite() { return m_sprtPresent; }
+	ObjectStatus getObStat() { return ObStat; }
+	virtual std::string identify() { return "default"; }
 	virtual void checkAll(float time);
 	virtual void draw();
 };

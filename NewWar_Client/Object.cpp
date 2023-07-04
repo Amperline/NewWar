@@ -8,7 +8,8 @@ Object::Object(sf::RenderWindow* window, std::string fileName, std::string name,
 	m_txtr.loadFromImage(m_img);
 	m_sprt.setTexture(m_txtr);
 	m_sprtPresent = m_sprt;
-	if (ObStat == ObjectStatus::INPLAYER) { m_sprt.setScale(scaleNorm); }
+	m_sprt.setScale(m_scaleNorm);
+	m_sprtPresent.setScale(m_scalePresent);
 	if(ObStat == ObjectStatus::INVENT || ObStat == ObjectStatus::INPLAYER)
 	{
 		Owned = 1;
@@ -41,5 +42,14 @@ void Object::checkAll(float time)
 
 void Object::draw()
 {
-	m_window->draw(m_sprtPresent);
+	if(ObStat == ObjectStatus::INPLAYER 
+		|| ObStat == ObjectStatus::USED
+		||ObStat == ObjectStatus::GROUND)
+	{
+		m_window->draw(m_sprt);
+	}
+	else if (ObStat == ObjectStatus::INVENT)
+	{
+		m_window->draw(m_sprtPresent);
+	}
 }

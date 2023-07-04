@@ -3,6 +3,7 @@
 #include "Object.h"
 #include <vector>
 #include <array>
+#include "Interface.h"
 
 class Character
 {
@@ -37,13 +38,17 @@ private:
 
 	short lastSide = 1;
 	void checkAnim(float time);
-public:
-	Object* CurrOb;
 	std::array<Object*, 36> ObjectsLine;
+	Object** CurrOb;
+public:
 	Character(sf::RenderWindow* window, sf::Vector2f startPos);
-	sf::Sprite& getSprt() { return m_sprt; }
+	sf::Sprite& ownSprt() { return m_sprt; }
 	void checkAll(float time);
+	sf::Sprite& getSprite() { return m_sprt; }
 	void draw();
+	bool ownObject(Object* ob);
+	void throwObject(short index);
 	
 	friend Object;
+	friend Interface;
 };
