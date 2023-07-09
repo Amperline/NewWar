@@ -1,18 +1,20 @@
 #include "Training.h"
 #include "Grass.h"
+#include "Ammo.h"
 
 void Training(sf::RenderWindow* window)
 {
     sf::Clock clock;
     Grass grass(window);
-    Character pl(window, sf::Vector2f(100, 100));
+    std::list<Ammo*> AMMOS;
+    Character pl(window, sf::Vector2f(1000, 1000));
     sf::View vTr = window->getView();
-
-    Weapon CarbineAlpha(window, "resource/images/Weapon/CarbineAlpha", "CarbineAlpha", Object::ObjectStatus::INPLAYER, Weapon::WeaponType::Carbine,
-        sf::Vector2f(6, 6), sf::Vector2f(4, 4), sf::Vector2f(100, 100));
+    Interface m_interface(window, &pl);
+    Weapon CarbineAlpha(window, "resource/images/Weapon/CarbineAlpha", &AMMOS, "CarbineAlpha",Object::ObjectStatus::INPLAYER, Weapon::WeaponType::Carbine,
+        sf::Vector2f(6, 6), sf::Vector2f(100, 100));
 
     pl.ownObject(&CarbineAlpha);
-    
+    pl.setCurrOb(1);
     while (window->isOpen())
     {
         float time = clock.getElapsedTime().asMicroseconds();
@@ -28,22 +30,40 @@ void Training(sf::RenderWindow* window)
                 window->close();
         }
         pl.checkAll(NormalTime);
+        CheckAmmo(AMMOS, NormalTime);
         CarbineAlpha.checkAll(NormalTime);
+        m_interface.checkAll();
         
         float x = pl.getSprite().getPosition().x;
         float y = pl.getSprite().getPosition().y;
-        
-        
-        //if (x < 320) x = 320;
-        //else if (x > 640) x = 640;
-        //else if (y < 240) y = 240;
-        //else if (y > 720) y = 720;
-        vTr.setCenter(x + 60, y + 108);
+        vTr.setCenter(x + 34, y + 108);
         
         window->setView(vTr);
         window->clear();
+
         grass.draw();
-        pl.draw();
+        drawAmmo(AMMOS);
+        Object* ValCrrOb = *pl.CurrOb;
+        if (ValCrrOb != nullptr)
+        {
+            if (pl.lastSide == 2 || pl.lastSide == 3 || pl.lastSide == 4)
+            {
+                pl.draw();
+                ValCrrOb->draw();
+            }
+            else if (pl.lastSide == 1)
+            {
+                ValCrrOb->draw();
+                pl.draw();
+            }
+        }
+        else
+        {
+            pl.draw();
+        }
+
+        m_interface.draw();
         window->display();
     }
+    window->setView(window->getDefaultView());
 }

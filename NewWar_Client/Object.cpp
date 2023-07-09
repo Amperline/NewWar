@@ -10,15 +10,15 @@ Object::Object(sf::RenderWindow* window, std::string fileName, std::string name,
 	m_sprtPresent = m_sprt;
 	m_sprt.setScale(m_scaleNorm);
 	m_sprtPresent.setScale(m_scalePresent);
-	if(ObStat == ObjectStatus::INVENT || ObStat == ObjectStatus::INPLAYER)
-	{
-		Owned = 1;
-	}
+}
+
+void Object::death()
+{
+	LifeStat = DEAD;
 }
 
 void Object::checkAll(float time)
 {
-	
 	if(ObStat == ObjectStatus::GROUND)
 	{
 		m_sprt.setRotation(90);
@@ -37,6 +37,17 @@ void Object::checkAll(float time)
 	if(ObStat == ObjectStatus::INPLAYER)
 	{
 		m_sprt.setPosition(sf::Vector2f(m_posSet));
+	}
+	if (LifeStat == ALIFE)
+	{
+		if(hp <= 0)
+		{
+			LifeStat = DEAD;
+		}
+	}
+	else if (LifeStat == DEAD)
+	{
+		END = 1;
 	}
 }
 

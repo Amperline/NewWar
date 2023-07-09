@@ -85,15 +85,8 @@ int main()
         }
 
 
-         
-
-
-
-
 
         window.clear();
-
-
 
         if (GAMESTATUS == GameStatus::IN_MENU)
         {

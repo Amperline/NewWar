@@ -9,6 +9,7 @@ Character::Character(sf::RenderWindow* window, sf::Vector2f startPos)
 	m_sprt.setTextureRect(sf::IntRect(0, 0, 20, 34));
 	m_sprt.setOrigin(4, 0);
 	m_sprt.setScale(6, 6);
+	m_sprt.setPosition(startPos);
 
 	NormalDown[0] = sf::IntRect(0, 0, 20, 34);
 	NormalDown[1] = sf::IntRect(20, 0, 20, 34);
@@ -50,24 +51,9 @@ Character::Character(sf::RenderWindow* window, sf::Vector2f startPos)
 	CarryingRight[2] = sf::IntRect(40 + 60, 102, 20, 34);
 	CarryingRight[3] = sf::IntRect(20 + 60, 102, 20, 34);
 
-	Line_img.loadFromFile("resource/images/Interface/ObjectLine.png");
-	Line_txtr.loadFromImage(Line_img);
-	Line_sprt.setTexture(Line_txtr);
-
-	Invnt_img.loadFromFile("resource/images/Interface/Inventory.png");
-	Invnt_txtr.loadFromImage(Invnt_img);
-	Invnt_sprt.setTexture(Invnt_txtr);
-
-	Curr_img.loadFromFile("resource/images/Interface/CurrentOb.png");
-	Curr_txtr.loadFromImage(Curr_img);
-	Curr_sprt.setTexture(Curr_txtr);
-
-	Line_sprt.setScale(6, 6);
-	Invnt_sprt.setScale(6, 6);
-	Curr_sprt.setScale(6, 6);
-
-
 	m_sprt.setTextureRect(NormalDown[0]);
+	for (int i = 0; i < 36; i++)
+		ObjectsLine[i] = nullptr;
 	CurrOb = &ObjectsLine[1];
 }
 
@@ -134,24 +120,24 @@ void Character::checkAll(float time)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) { Down = 1; Up = 0; lastSide = 2; }
 	else { Down = 0; }
 	checkAnim(time);
-	if(CurrOb != nullptr)
+	Object* ValCrrOb = *CurrOb;
+	if(ValCrrOb != nullptr)
 	{
-		Object* ValCrrOb = *CurrOb;
 		ValCrrOb->setObStat(Object::INPLAYER);
-		if(Right == 1)
+		if(lastSide == 4)
 		{
 			ValCrrOb->getPosSet() = sf::Vector2i(sf::Vector2f(m_sprt.getPosition().x + 72, m_sprt.getPosition().y + 84));
 		}
-		else if (Left == 1)
+		else if (lastSide == 3)
 		{
 			ValCrrOb->getPosSet() = sf::Vector2i(sf::Vector2f(m_sprt.getPosition().x, m_sprt.getPosition().y + 84));
 		}
-		if (Down == 1 || Up == 1)
+		if (lastSide == 1 || lastSide == 2)
 		{
 			ValCrrOb->getPosSet() = sf::Vector2i(sf::Vector2f(m_sprt.getPosition().x + 36, m_sprt.getPosition().y + 84));
 		}
 	}
-	if(CurrOb != &ObjectsLine[0] && CurrOb != nullptr)
+	if(CurrOb != &ObjectsLine[0] && ValCrrOb != nullptr)
 	{
 		playerStat = PlayerStatus::CARRYING;
 	}
@@ -163,33 +149,49 @@ void Character::checkAll(float time)
 
 void Character::draw()
 {
-	if(CurrOb != nullptr)
+	Object* ValCrrOb = *CurrOb;
+	sf::Color spriteColor = m_sprt.getColor();
+	if(lastSide == 1)
 	{
-		Object* ValCrrOb = *CurrOb;
-		if (lastSide == 2 || lastSide == 3 || lastSide == 4)
+		if (ValCrrOb != nullptr)
 		{
-			m_window->draw(m_sprt);
-			ValCrrOb->draw();
+			spriteColor.a = 180;
 		}
-		else if(lastSide == 1)
+		else
 		{
-			ValCrrOb->draw();
-			m_window->draw(m_sprt);
+			spriteColor.a = 255;
 		}
 	}
 	else
 	{
-		m_window->draw(m_sprt);
+		spriteColor.a = 255;
+	}
+	m_sprt.setColor(spriteColor);
+	m_window->draw(m_sprt);
+}
+
+void Character::setCurrOb(short index)
+{
+	Object* VCurr = *CurrOb;
+	if (VCurr != nullptr)
+	{
+		VCurr->setObStat(Object::INVENT);
+	}
+	CurrOb = &ObjectsLine[index];
+	Object* V2Curr = *CurrOb;
+	if(V2Curr != nullptr)
+	{
+		V2Curr->setObStat(Object::INPLAYER);
 	}
 }
 
 bool Character::ownObject(Object* ob)
 {
-	for(int i = 1; i < 36; i++)
+	for (int i = 1; i < 36; i++)
 	{
-		if(ObjectsLine[i] == nullptr)
+		if (ObjectsLine[i] == nullptr)
 		{
-			if(i == 1)
+			if (i == 1)
 			{
 				if (ob->identify() == "Main")
 				{
@@ -198,7 +200,7 @@ bool Character::ownObject(Object* ob)
 					return 1;
 				}
 			}
-			else if(i == 2)
+			else if (i == 2)
 			{
 				if (ob->identify() == "Pistol")
 				{
