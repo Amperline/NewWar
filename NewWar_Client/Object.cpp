@@ -17,6 +17,21 @@ void Object::death()
 	LifeStat = DEAD;
 }
 
+void Object::checkDeath()
+{
+	if (LifeStat == ALIFE)
+	{
+		if (hp <= 0)
+		{
+			LifeStat = DEAD;
+		}
+	}
+	else if (LifeStat == DEAD)
+	{
+		END = 1;
+	}
+}
+
 void Object::checkAll(float time)
 {
 	if(ObStat == ObjectStatus::GROUND)
@@ -37,17 +52,6 @@ void Object::checkAll(float time)
 	if(ObStat == ObjectStatus::INPLAYER)
 	{
 		m_sprt.setPosition(sf::Vector2f(m_posSet));
-	}
-	if (LifeStat == ALIFE)
-	{
-		if(hp <= 0)
-		{
-			LifeStat = DEAD;
-		}
-	}
-	else if (LifeStat == DEAD)
-	{
-		END = 1;
 	}
 }
 

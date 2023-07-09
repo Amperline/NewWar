@@ -34,6 +34,7 @@ protected:
 	int counterAnim = 0;
 	bool AnimGround;
 
+	bool DeathAble = 0;
 	bool END;
 	int hp;
 public:
@@ -45,9 +46,11 @@ public:
 	sf::Sprite& getPresentSprite() { return m_sprtPresent; }
 	ObjectStatus getObStat() { return ObStat; }
 
+	void setDeathAble(bool val) { DeathAble = val; }
 	int& getHP() { return hp; }
 	void death();
 	bool getEnd() { return END; }
+	virtual void checkDeath();
 
 	virtual std::string getMiniInfoDefault() { return std::string(""); }
 	virtual std::string identify() { return "default"; }
