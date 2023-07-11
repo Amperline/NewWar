@@ -38,6 +38,7 @@ public:
 	void check(float time);
 	LIFE_STATUS& getLifeStat() { return LifeStat; }
 	bool getEnd() { return END; }
+	sf::Sprite& getSprt() { return m_sprt; }
 	void draw();
 	~Ammo();
 };

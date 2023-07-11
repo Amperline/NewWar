@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\ClientCon">
+      <UniqueIdentifier>{3d930db9-dae6-49ef-907d-f4ec3ebd273a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\ClientCon">
+      <UniqueIdentifier>{880a9ffb-86d3-4e37-95a0-1e23a2029a7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -21,10 +27,16 @@
     <ClCompile Include="ConnectorGuard.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\NewWar\ClientCon.cpp">
+      <Filter>Исходные файлы\ClientCon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConnectorGuard.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NewWar\ClientCon.h">
+      <Filter>Файлы заголовков\ClientCon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -165,10 +165,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\NewWar\ClientCon.cpp" />
     <ClCompile Include="ConnectorGuard.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\NewWar\ClientCon.h" />
     <ClInclude Include="ConnectorGuard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,7 +21,7 @@ private:
 	WeaponType Type;
 	std::list<Ammo*>* m_ammos;
 	int AmmoVal = 0;
-	int AmmoValMax1;
+	int AmmoValMax1 = 0;
 	const int& AmmoValMax = AmmoValMax1;
 	bool Reload = 0;
 public:

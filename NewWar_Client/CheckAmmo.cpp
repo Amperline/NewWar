@@ -12,7 +12,7 @@ void CheckAmmo(std::list<Ammo*>& ammos, float time)
             {
                 delete am;
                 it = ammos.erase(it);
-                continue;
+                break;
             }
         }
         ++it;

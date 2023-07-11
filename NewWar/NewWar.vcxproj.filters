@@ -19,12 +19,6 @@
     <Filter Include="Исходные файлы\packets">
       <UniqueIdentifier>{3747184d-a224-439f-911e-82db51b2dcd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\ClientCon">
-      <UniqueIdentifier>{8a81e2a0-ed79-4722-8505-2e3401d0a2ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\ClientCon">
-      <UniqueIdentifier>{9d4e9bd0-7de2-479d-9ecb-f29f5acbd6b7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -57,9 +51,6 @@
     <ClInclude Include="ConnectorPacket.h">
       <Filter>Файлы заголовков\packets</Filter>
     </ClInclude>
-    <ClInclude Include="ClientCon.h">
-      <Filter>Файлы заголовков\ClientCon</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp">
@@ -79,9 +70,6 @@
     </ClCompile>
     <ClCompile Include="Errorlog.cpp">
       <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientCon.cpp">
-      <Filter>Исходные файлы\ClientCon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

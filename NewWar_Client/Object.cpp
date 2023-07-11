@@ -34,24 +34,34 @@ void Object::checkDeath()
 
 void Object::checkAll(float time)
 {
-	if(ObStat == ObjectStatus::GROUND)
-	{
-		m_sprt.setRotation(90);
-		counterAnim += 0.005 * time;
-		if (counterAnim >= 4) AnimGround = 1;
-		if (counterAnim >= 8) counterAnim = 0; AnimGround = 0;
-		if(AnimGround == 0)
-		{
-			m_sprt.move(0, -0.05 * time);
-		}
-		else if(AnimGround == 1)
-		{
-			m_sprt.move(0, 0.05 * time);
-		}
-	}
 	if(ObStat == ObjectStatus::INPLAYER)
 	{
 		m_sprt.setPosition(sf::Vector2f(m_posSet));
+	}
+	else if(ObStat == ObjectStatus::GROUND)
+	{
+		if (!groundPause)
+		{
+			if (AnimGround == 0 && (m_sprt.getPosition().y >= (groundPos.y - 50)))
+			{
+				m_sprt.move(0, -0.06 * time);
+			}
+			else { AnimGround = 1; }
+			if (AnimGround == 1 && (m_sprt.getPosition().y < groundPos.y))
+			{
+				m_sprt.move(0, 0.05 * time);
+			}
+			else { AnimGround = 0; }
+		}
+		else { groundPos = m_sprt.getPosition(); }
+	}
+	else if (ObStat == ObjectStatus::USED)
+	{
+		m_sprt.setScale(m_scaleUsed);
+	}
+	if (DeathAble)
+	{
+		checkDeath();
 	}
 }
 

@@ -12,13 +12,13 @@ public:
 private:
 	ResourceType TypeRes;
 
-	int valueOfStack;
+	int m_valueOfStack;
 	int MAXVal = 100;
 	const int& MAXVAL = MAXVal;
 public:
-	Resources(sf::RenderWindow* window, std::string name, ObjectStatus obSt, ResourceType typeRes);
-	int& getValofStack() { return valueOfStack; }
-	std::string getMiniInfoDefault() override { return std::string(std::to_string(valueOfStack)); }
+	Resources(sf::RenderWindow* window, sf::Vector2f StartPos, int valueofStack, std::string name, ObjectStatus obSt, ResourceType typeRes);
+	int& getValofStack() { return m_valueOfStack; }
+	std::string getMiniInfoDefault() override { return std::string(std::to_string(m_valueOfStack)); }
 	std::string identify() override;
 };
 

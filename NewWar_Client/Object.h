@@ -27,14 +27,16 @@ protected:
 
 	sf::Vector2f m_scaleNorm;
 	sf::Vector2f m_scalePresent;
+	sf::Vector2f m_scaleUsed;
 	ObjectStatus ObStat;
 	sf::RenderWindow* m_window;
 	sf::Vector2i m_posSet;
-	sf::Clock TimerAnim;
-	int counterAnim = 0;
-	bool AnimGround;
 
-	bool DeathAble = 0;
+	sf::Vector2f groundPos;
+	bool AnimGround;
+	bool groundPause = 0;
+
+	bool DeathAble = 1;
 	bool END;
 	int hp;
 public:
@@ -45,12 +47,17 @@ public:
 	sf::Sprite& getSprite() { return m_sprt; }
 	sf::Sprite& getPresentSprite() { return m_sprtPresent; }
 	ObjectStatus getObStat() { return ObStat; }
+	sf::Vector2f& getScaleUsed() { return m_scaleUsed; }
 
+	LIFE_STATUS getlifeStat() { return LifeStat; }
 	void setDeathAble(bool val) { DeathAble = val; }
 	int& getHP() { return hp; }
 	void death();
 	bool getEnd() { return END; }
 	virtual void checkDeath();
+	void setGrPause(bool val) { groundPause = val; }
+	
+	sf::Vector2f& getGroundPos() { return groundPos; }
 
 	virtual std::string getMiniInfoDefault() { return std::string(""); }
 	virtual std::string identify() { return "default"; }

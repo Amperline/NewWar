@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="ClientCon.h" />
     <ClInclude Include="ConnectorPacket.h" />
     <ClInclude Include="Errorlog.h" />
     <ClInclude Include="Field.h" />
@@ -162,7 +161,6 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="ClientCon.cpp" />
     <ClCompile Include="Errorlog.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameString.cpp" />

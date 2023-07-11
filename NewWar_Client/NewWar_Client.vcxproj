@@ -163,6 +163,9 @@
     <ClCompile Include="ButtonController.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CheckAmmo.cpp" />
+    <ClCompile Include="CheckInteraction.cpp" />
+    <ClCompile Include="CheckRes.cpp" />
+    <ClCompile Include="CheckTree.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -178,6 +181,9 @@
     <ClInclude Include="ButtonController.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CheckAmmo.h" />
+    <ClInclude Include="CheckInteraction.h" />
+    <ClInclude Include="CheckRes.h" />
+    <ClInclude Include="CheckTree.h" />
     <ClInclude Include="Grass.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Object.h" />

@@ -90,7 +90,7 @@ void Ammo::draw()
 	else if(LifeStat == DEAD && END != 1)
 	{
 		int frame = 0;
-		frame = TimerAnim.getElapsedTime().asMilliseconds() / 500;
+		frame = TimerAnim.getElapsedTime().asMilliseconds() / 40;
 		if (frame > 2)
 		{
 			frame = 2;

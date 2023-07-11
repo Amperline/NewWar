@@ -19,6 +19,12 @@
     <Filter Include="Файлы заголовков\Training">
       <UniqueIdentifier>{93cb068e-5f74-4ff8-b14f-e00d70230074}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Training\check">
+      <UniqueIdentifier>{b8be3652-bb2d-4338-ae1a-ac59b76f8dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Training\check">
+      <UniqueIdentifier>{e85894e3-04f5-442c-a4cb-90b24f1cf215}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -51,14 +57,23 @@
     <ClCompile Include="Interface.cpp">
       <Filter>Исходные файлы\Training</Filter>
     </ClCompile>
-    <ClCompile Include="CheckAmmo.cpp">
-      <Filter>Исходные файлы\Training</Filter>
-    </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>Исходные файлы\Training</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
       <Filter>Исходные файлы\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckAmmo.cpp">
+      <Filter>Исходные файлы\Training\check</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckRes.cpp">
+      <Filter>Исходные файлы\Training\check</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckTree.cpp">
+      <Filter>Исходные файлы\Training\check</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckInteraction.cpp">
+      <Filter>Исходные файлы\Training\check</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,14 +104,23 @@
     <ClInclude Include="Interface.h">
       <Filter>Файлы заголовков\Training</Filter>
     </ClInclude>
-    <ClInclude Include="CheckAmmo.h">
+    <ClInclude Include="Resources.h">
       <Filter>Файлы заголовков\Training</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources.h">
       <Filter>Файлы заголовков\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckRes.h">
+      <Filter>Файлы заголовков\Training\check</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckAmmo.h">
+      <Filter>Файлы заголовков\Training\check</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckTree.h">
+      <Filter>Файлы заголовков\Training\check</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckInteraction.h">
+      <Filter>Файлы заголовков\Training\check</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
