@@ -2,7 +2,7 @@
 #include "Object.h"
 #include "Character.h"
 #include "Interface.h"
-
+#include "CheckStone.h"
 #include "CheckInteraction.h"
 #include "CheckAmmo.h"
 #include "CheckRes.h"

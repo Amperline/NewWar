@@ -1,5 +1,7 @@
 #pragma once
 #pragma warning( disable : 4430 )
+#include <list>
+#include "Object.h"
 #include "Character.h"
 #include <NewWar/GameString.h>
 
@@ -15,11 +17,26 @@ public:
 private:
 	InterfaceStatus InterfStat = DEFAULT;
 	sf::Clock PressTimer;
+	sf::Clock OwnTimer;
 
 	bool TABBED;
 	bool PRESSED;
 	bool PERMISSION;
+
+	bool ButtonMpressed = 0;
+	bool ButtonMpressed2 = 0;
+	bool InventIsSwap = 0;
+
 	sf::RenderWindow* m_window;
+
+	sf::Image Bin_img;
+	sf::Texture Bin_txtr;
+	sf::Sprite Bin_sprt;
+
+	sf::Image Icon_img;
+	sf::Texture Icon_txtr;
+	sf::Sprite Icon_sprt;
+
 	sf::Image Line_img;
 	sf::Texture Line_txtr;
 	sf::Sprite Line_sprt;
@@ -41,6 +58,6 @@ public:
 	InterfaceStatus& getStatus() { return InterfStat; }
 	void checkKeys();
 	void checkAll();
-	void draw();
+	void draw(std::list<Object*>& OBJECTS);
 };
 

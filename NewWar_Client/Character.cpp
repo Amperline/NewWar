@@ -170,6 +170,29 @@ void Character::draw()
 	m_window->draw(m_sprt);
 }
 
+sf::FloatRect Character::getFloatRect()
+{
+	sf::Sprite sp(m_sprt);
+	sp.setOrigin(4, 30);
+
+	sf::FloatRect rect;
+	rect.left = sp.getPosition().x;
+	rect.top = sp.getPosition().y + 30 * 6;
+	rect.width = 12 * 6;
+	rect.height = 4 * 6;
+
+	return rect;
+}
+
+bool Character::getSIDE(int side)
+{
+	if (side == 1) { return Up; }
+	else if (side == 2) { return Down; }
+	else if (side == 3) { return Left; }
+	else if (side == 4) { return Right; }
+	return false;
+}
+
 void Character::setCurrOb(short index)
 {
 	Object* VCurr = *CurrOb;
@@ -187,41 +210,93 @@ void Character::setCurrOb(short index)
 
 bool Character::ownObject(Object* ob)
 {
-	for (int i = 1; i < 36; i++)
+	for (int i = 1; i < 43; i++)
 	{
-		if (ObjectsLine[i] == nullptr)
+		if (i == 1)
 		{
-			if (i == 1)
+			
+			if (ob->identify() == "Main")
 			{
-				if (ob->identify() == "Main")
-				{
-					ObjectsLine[1] = ob;
-					ob->setObStat(Object::INVENT);
-					return 1;
-				}
-			}
-			else if (i == 2)
-			{
-				if (ob->identify() == "Pistol")
-				{
-					ObjectsLine[2] = ob;
-					ob->setObStat(Object::INVENT);
-					return 1;
-				}
-			}
-			else
-			{
-				ObjectsLine[i] = ob;
+				throwObject(2);
+				ObjectsLine[1] = ob;
 				ob->setObStat(Object::INVENT);
 				return 1;
+			}
+		}
+		else if (i == 2)
+		{
+			if (ob->identify() == "Pistol")
+			{
+				throwObject(2);
+				ObjectsLine[2] = ob;
+				ob->setObStat(Object::INVENT);
+				return 1;
+			}
+		}
+		else
+		{
+			if (ob->identify() == "wood"
+				|| ob->identify() == "stone")
+			{
+				for(i = 6; i < 40; i++)
+				{
+					if (ObjectsLine[i] != nullptr)
+					{
+						if (ObjectsLine[i]->identify() == ob->identify())
+						{
+							Resources* res = dynamic_cast<Resources*>(ObjectsLine[i]);
+							Resources* res2 = dynamic_cast<Resources*>(ob);
+							if(res->getValofStack() < 100)
+							{
+								int valPr = 100 - res->getValofStack();
+								if (valPr < res2->getValofStack())
+								{
+									res->getValofStack() += valPr;
+									res2->getValofStack() - valPr;
+									if(ownObject(res2))
+									{
+										res2->setObStat(Object::ObjectStatus::INVENT);
+										return 1;
+									}
+								}
+								else if(valPr >= res2->getValofStack())
+								{
+									res->getValofStack() += valPr;
+								
+									res2->getHP() - 100;
+									return 1;
+								}
+							}
+						}
+					}
+					else
+					{
+						ObjectsLine[i] = ob;
+						ob->setObStat(Object::INVENT);
+						return 1;
+					}
+				}
 			}
 		}
 	}
 	return false;
 }
 
+void Character::swapOB(int ind1, int ind2)
+{
+	if (ind1 != ind2)
+	{
+		Object& ptr = *ObjectsLine[ind2];
+		ObjectsLine[ind2] = ObjectsLine[ind1];
+		ObjectsLine[ind1] = &ptr;
+	}
+}
+
 void Character::throwObject(short index)
 {
-	ObjectsLine[index]->setObStat(Object::GROUND);
-	ObjectsLine[index] = nullptr;
+	if (ObjectsLine[index] != nullptr)
+	{
+		ObjectsLine[index]->setObStat(Object::GROUND);
+		ObjectsLine[index] = nullptr;
+	}
 }

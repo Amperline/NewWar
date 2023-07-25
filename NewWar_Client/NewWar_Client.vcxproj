@@ -165,6 +165,7 @@
     <ClCompile Include="CheckAmmo.cpp" />
     <ClCompile Include="CheckInteraction.cpp" />
     <ClCompile Include="CheckRes.cpp" />
+    <ClCompile Include="CheckStone.cpp" />
     <ClCompile Include="CheckTree.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="Interface.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Registration.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Training.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -183,12 +185,14 @@
     <ClInclude Include="CheckAmmo.h" />
     <ClInclude Include="CheckInteraction.h" />
     <ClInclude Include="CheckRes.h" />
+    <ClInclude Include="CheckStone.h" />
     <ClInclude Include="CheckTree.h" />
     <ClInclude Include="Grass.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Registration.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="Stone.h" />
     <ClInclude Include="Training.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Weapon.h" />

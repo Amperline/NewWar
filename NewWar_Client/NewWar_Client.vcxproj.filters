@@ -75,6 +75,12 @@
     <ClCompile Include="CheckInteraction.cpp">
       <Filter>Исходные файлы\Training\check</Filter>
     </ClCompile>
+    <ClCompile Include="Stone.cpp">
+      <Filter>Исходные файлы\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckStone.cpp">
+      <Filter>Исходные файлы\Training\check</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Registration.h">
@@ -120,6 +126,12 @@
       <Filter>Файлы заголовков\Training\check</Filter>
     </ClInclude>
     <ClInclude Include="CheckInteraction.h">
+      <Filter>Файлы заголовков\Training\check</Filter>
+    </ClInclude>
+    <ClInclude Include="Stone.h">
+      <Filter>Файлы заголовков\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckStone.h">
       <Filter>Файлы заголовков\Training\check</Filter>
     </ClInclude>
   </ItemGroup>

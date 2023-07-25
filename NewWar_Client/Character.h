@@ -1,5 +1,6 @@
 #pragma once
 #include <NewWar/NewWarLib.h>
+#include "Resources.h"
 #include "Object.h"
 #include <vector>
 #include <array>
@@ -38,14 +39,17 @@ private:
 	void checkAnim(float time);
 public:
 	short lastSide = 2;
-	std::array<Object*, 36> ObjectsLine;
+	std::array<Object*, 43> ObjectsLine;
 	Object** CurrOb;
 	Character(sf::RenderWindow* window, sf::Vector2f startPos);
 	sf::Sprite& ownSprt() { return m_sprt; }
 	void checkAll(float time);
 	sf::Sprite& getSprite() { return m_sprt; }
 	void draw();
+	sf::FloatRect getFloatRect();
+	bool getSIDE(int side);
 	void setCurrOb(short index);
 	bool ownObject(Object* ob);
+	void swapOB(int ind1, int ind2);
 	void throwObject(short index);
 };

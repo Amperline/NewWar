@@ -15,9 +15,11 @@ private:
 	int m_valueOfStack;
 	int MAXVal = 100;
 	const int& MAXVAL = MAXVal;
+	sf::Clock LifeTimer;
 public:
 	Resources(sf::RenderWindow* window, sf::Vector2f StartPos, int valueofStack, std::string name, ObjectStatus obSt, ResourceType typeRes);
 	int& getValofStack() { return m_valueOfStack; }
+	void checkDeath() override;
 	std::string getMiniInfoDefault() override { return std::string(std::to_string(m_valueOfStack)); }
 	std::string identify() override;
 };

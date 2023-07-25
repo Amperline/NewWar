@@ -1,25 +1,25 @@
 #pragma once
+#pragma once
 #include "Object.h"
 #include"Resources.h"
 #include <list>
 
-class Tree : public Object
+class Stone : public Object
 {
 public:
-	enum TreeType
+	enum StoneType
 	{
-		SMALL, 
+		SMALL,
 		MID,
 		BIG
 	};
 private:
 	std::list<Resources*>* resPtrArr;
 	int valOfDrop = 0;
-	TreeType treeType;
+	StoneType stoneType;
 public:
-	Tree(sf::RenderWindow* window, std::list<Resources*>* resArr, TreeType treetype, sf::Vector2f StartPos, ObjectStatus obSt);
+	Stone(sf::RenderWindow* window, std::list<Resources*>* resArr, StoneType treetype, sf::Vector2f StartPos, ObjectStatus obSt);
 	std::string identify() override;
 	void checkAll(float time);
 	void checkDeath() override;
 };
-
