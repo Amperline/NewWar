@@ -13,16 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Исходные файлы\Training">
+    <Filter Include="Исходные файлы\GamePlay">
       <UniqueIdentifier>{f6d67c43-2b50-408d-a67c-303564eccdfa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\Training">
-      <UniqueIdentifier>{93cb068e-5f74-4ff8-b14f-e00d70230074}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\Training\check">
+    <Filter Include="Исходные файлы\GamePlay\check">
       <UniqueIdentifier>{b8be3652-bb2d-4338-ae1a-ac59b76f8dd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\Training\check">
+    <Filter Include="Файлы заголовков\GamePlay">
+      <UniqueIdentifier>{93cb068e-5f74-4ff8-b14f-e00d70230074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GamePlay\check">
       <UniqueIdentifier>{e85894e3-04f5-442c-a4cb-90b24f1cf215}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -37,49 +37,61 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Training.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Grass.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Ammo.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Interface.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Tree.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="CheckAmmo.cpp">
-      <Filter>Исходные файлы\Training\check</Filter>
+      <Filter>Исходные файлы\GamePlay\check</Filter>
     </ClCompile>
     <ClCompile Include="CheckRes.cpp">
-      <Filter>Исходные файлы\Training\check</Filter>
+      <Filter>Исходные файлы\GamePlay\check</Filter>
     </ClCompile>
     <ClCompile Include="CheckTree.cpp">
-      <Filter>Исходные файлы\Training\check</Filter>
+      <Filter>Исходные файлы\GamePlay\check</Filter>
     </ClCompile>
     <ClCompile Include="CheckInteraction.cpp">
-      <Filter>Исходные файлы\Training\check</Filter>
+      <Filter>Исходные файлы\GamePlay\check</Filter>
     </ClCompile>
     <ClCompile Include="Stone.cpp">
-      <Filter>Исходные файлы\Training</Filter>
+      <Filter>Исходные файлы\GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="CheckStone.cpp">
-      <Filter>Исходные файлы\Training\check</Filter>
+      <Filter>Исходные файлы\GamePlay\check</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckWeapon.cpp">
+      <Filter>Исходные файлы\GamePlay\check</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Исходные файлы\GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Chest.cpp">
+      <Filter>Исходные файлы\GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckChest.cpp">
+      <Filter>Исходные файлы\GamePlay\check</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,49 +102,64 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Training.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Grass.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Ammo.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Interface.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="CheckRes.h">
-      <Filter>Файлы заголовков\Training\check</Filter>
+      <Filter>Файлы заголовков\GamePlay\check</Filter>
     </ClInclude>
     <ClInclude Include="CheckAmmo.h">
-      <Filter>Файлы заголовков\Training\check</Filter>
+      <Filter>Файлы заголовков\GamePlay\check</Filter>
     </ClInclude>
     <ClInclude Include="CheckTree.h">
-      <Filter>Файлы заголовков\Training\check</Filter>
+      <Filter>Файлы заголовков\GamePlay\check</Filter>
     </ClInclude>
     <ClInclude Include="CheckInteraction.h">
-      <Filter>Файлы заголовков\Training\check</Filter>
+      <Filter>Файлы заголовков\GamePlay\check</Filter>
     </ClInclude>
     <ClInclude Include="Stone.h">
-      <Filter>Файлы заголовков\Training</Filter>
+      <Filter>Файлы заголовков\GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="CheckStone.h">
-      <Filter>Файлы заголовков\Training\check</Filter>
+      <Filter>Файлы заголовков\GamePlay\check</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckWeapon.h">
+      <Filter>Файлы заголовков\GamePlay\check</Filter>
+    </ClInclude>
+    <ClInclude Include="FlagsStruct.h">
+      <Filter>Файлы заголовков\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Файлы заголовков\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.h">
+      <Filter>Файлы заголовков\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckChest.h">
+      <Filter>Файлы заголовков\GamePlay\check</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

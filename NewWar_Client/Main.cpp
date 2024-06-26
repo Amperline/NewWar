@@ -10,6 +10,7 @@
 
 
 GameStatus GAMESTATUS{GameStatus::IN_MENU};
+KeyFlags flagsKey;
 
 int main()
 {
@@ -57,7 +58,6 @@ int main()
 
         if(GAMESTATUS == GameStatus::IN_MENU)
         {
-            Training(&window);
             MainMenu.checkAll();
             Button1.checkAll();
             Button2.checkAll();
@@ -75,7 +75,7 @@ int main()
         }
         else if (GAMESTATUS == GameStatus::TRAINING)
         {
-            Training(&window);
+            Training(&window, &flagsKey);
             window.setView(window.getDefaultView());
             GAMESTATUS = GameStatus::IN_MENU;
         }

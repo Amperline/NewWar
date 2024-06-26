@@ -27,12 +27,17 @@ Interface::Interface(sf::RenderWindow* window, Character* pl)
 	Bin_txtr.loadFromImage(Bin_img);
 	Bin_sprt.setTexture(Bin_txtr);
 
+	ChestIntf_img.loadFromFile("resource/images/Interface/ChestInterf.png");
+	ChestIntf_txtr.loadFromImage(ChestIntf_img);
+	ChestIntf_sprt.setTexture(ChestIntf_txtr);
+
 	Line_sprt.setScale(6, 6);
 	Invnt_sprt.setScale(6, 6);
 	Curr_sprt.setScale(6, 6);
 	CURR_sprt.setScale(6, 6);
 	Icon_sprt.setScale(6, 6);
 	Bin_sprt.setScale(6, 6);
+	ChestIntf_sprt.setScale(6, 6);
 
 	Icon_sprt.setTextureRect(sf::IntRect(0, 0, 25, 25));
 	Bin_sprt.setTextureRect(sf::IntRect(0, 0, 15, 15));
@@ -88,54 +93,55 @@ void Interface::checkKeys()
 		
 		if(InterfStat == INVENTORY)
 		{
+			//drawing and checking object, that is controled by mouse in inventory 
 			int v = 0;
 			int b = 0;
 			sf::Sprite sp;
 			sp.setTextureRect(sf::IntRect(0, 0, 25, 25));
 			sp.setScale(6, 6);	
-			for (int i = 0; i < 43; i++)
+			
+			for (int i = 0; i < 33; i++)
 			{
 				if (i < 6)
 				{
 					sp.setPosition((m_window->getView().getCenter().x - 960 + (98 * 6) + (120 * i)),
 						(m_window->getView().getCenter().y - 540 + (155 * 6)));
 				}
-				else if (i < 41)
+				else if (i < 31)
 				{
 					sp.setPosition((m_window->getView().getCenter().x - 960 + (118 * 6 + (120 * v))),
 						(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b))));
 					v++;
 					if (v == 5) { v = 0; b++; }
 				}
-				else if (i < 44)
+				else if (i < 33)
 				{
-					if (i == 41) {
-						sp.setPosition((m_window->getView().getCenter().x - 960 + (33 * 6)),
-							(m_window->getView().getCenter().y - 540 + (120 * 6)));
-					}
-					else if (i == 42) {
+					if (i == 31) {
 						sp.setPosition((m_window->getView().getCenter().x - 960 + (53 * 6)),
 							(m_window->getView().getCenter().y - 540 + (120 * 6)));
 					}
-					else if (i == 43) {
+					else if (i == 32) {
 						sp.setPosition((m_window->getView().getCenter().x - 960 + (73 * 6)),
 							(m_window->getView().getCenter().y - 540 + (120 * 6)));
 					}
 				}
 				sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window);
 				sf::Vector2f worldPosition = m_window->mapPixelToCoords(mousePosition);
-				if(sp.getGlobalBounds().contains(worldPosition)
+				if (sp.getGlobalBounds().contains(worldPosition)
 					&& sf::Mouse::isButtonPressed(sf::Mouse::Left)
 					&& ButtonMpressed2 == 0)
 				{
-					InventIsSwap = 1;
+					if(player->ObjectsLine[i] != nullptr)
+						InventIsSwap = 1;
 					player->setCurrOb(i);
 					ButtonMpressed2 = 1;
+					delete currObInChest;
+					currObInChest = nullptr;
 					break;
 				}
-				if(InventIsSwap && player->ObjectsLine[i] != nullptr 
+				if (InventIsSwap && player->ObjectsLine[i] != nullptr
 					&& player->CurrOb == &player->ObjectsLine[i]
-					&& i != 0 && i != 3)
+					&& i != 0 && currObInChest == nullptr)
 				{
 					sf::Sprite spC(player->ObjectsLine[i]->getPresentSprite());
 					spC.setOrigin(0, 0);
@@ -144,18 +150,104 @@ void Interface::checkKeys()
 					player->ObjectsLine[i]->getPresentSprite().setPosition(x, y);
 				}
 			}
+			
+			if (m_CurrChest != nullptr)
+			{
+				int v1 = 0;
+				int b1 = 0;
+				for (int i = 0; i < 20; i++)
+				{
+					sp.setPosition((m_window->getView().getCenter().x - 960 + (235 * 6 + (120 * v1))),
+						(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b1))));
+
+					sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window);
+					sf::Vector2f worldPosition = m_window->mapPixelToCoords(mousePosition);
+
+					if(sp.getGlobalBounds().contains(worldPosition)
+						&& sf::Mouse::isButtonPressed(sf::Mouse::Left)
+						&& ButtonMpressed2 == 0)
+					{
+						if(currObInChest != nullptr)
+							InventIsSwap = 1;
+						currObInChest = new int(i);
+						ButtonMpressed2 = 1;
+						break;
+					}
+					v1++;
+					if (v1 == 4) { v1 = 0; b1++; }
+					if (InventIsSwap && currObInChest != nullptr 
+						&& m_CurrChest->getArray()[i] != nullptr && *currObInChest == i)
+					{
+						sf::Sprite spC(m_CurrChest->getArray()[i]->getPresentSprite());
+						spC.setOrigin(0, 0);
+						float x = worldPosition.x - (spC.getGlobalBounds().width / 2);
+						float y = worldPosition.y - (spC.getGlobalBounds().height / 2);
+						m_CurrChest->getArray()[i]->getPresentSprite().setPosition(x, y);
+					}
+				}
+			}
+
 			Bin_sprt.setTextureRect(sf::IntRect(0, 0, 15, 15));
+			//check swap
 			if (InventIsSwap)
 			{
-				for (int i = 0; i < 43; i++)
+				if(currObInChest != nullptr)
+				{
+
+					int v2 = 0;
+					int b2 = 0;
+					for (int j = 0; j < 33; j++)
+					{
+						sf::Sprite sp2;
+						sp2.setTextureRect(sf::IntRect(0, 0, 25, 25));
+						sp2.setScale(6, 6);
+						if (j < 6)
+						{
+							sp2.setPosition((m_window->getView().getCenter().x - 960 + (98 * 6) + (120 * j)),
+								(m_window->getView().getCenter().y - 540 + (155 * 6)));
+						}
+						else if (j < 31)
+						{
+							sp2.setPosition((m_window->getView().getCenter().x - 960 + (118 * 6 + (120 * v2))),
+								(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b2))));
+							v2++;
+							if (v2 == 5) { v2 = 0; b2++; }
+						}
+						else if (j < 33)
+						{
+							if (j == 31) {
+								sp2.setPosition((m_window->getView().getCenter().x - 960 + (53 * 6)),
+									(m_window->getView().getCenter().y - 540 + (120 * 6)));
+							}
+							else if (j == 32) {
+								sp2.setPosition((m_window->getView().getCenter().x - 960 + (73 * 6)),
+									(m_window->getView().getCenter().y - 540 + (120 * 6)));
+							}
+						}
+						sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window);
+						sf::Vector2f worldPosition = m_window->mapPixelToCoords(mousePosition);
+
+						if (sp2.getGlobalBounds().contains(worldPosition)
+							&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
+						{
+							player->swapWithChest(m_CurrChest, j, *currObInChest);
+							player->setCurrOb(j);
+							delete currObInChest;
+							currObInChest = nullptr;
+							break;
+						}
+					}
+				}
+
+				for (int i = 0; i < 33; i++)
 				{
 					if (player->ObjectsLine[i] != nullptr
 						&& player->CurrOb == &player->ObjectsLine[i]
-						&& i != 0 && i != 3)
+						&& i != 0)
 					{
 						int v2 = 0;
 						int b2 = 0;
-						for (int j = 0; j < 43; j++)
+						for (int j = 0; j < 33; j++)
 						{
 							sf::Sprite sp2;
 							sp2.setTextureRect(sf::IntRect(0, 0, 25, 25));
@@ -165,20 +257,20 @@ void Interface::checkKeys()
 								sp2.setPosition((m_window->getView().getCenter().x - 960 + (98 * 6) + (120 * j)),
 									(m_window->getView().getCenter().y - 540 + (155 * 6)));
 							}
-							else if (j < 41)
+							else if (j < 31)
 							{
 								sp2.setPosition((m_window->getView().getCenter().x - 960 + (118 * 6 + (120 * v2))),
 									(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b2))));
 								v2++;
 								if (v2 == 5) { v2 = 0; b2++; }
 							}
-							else if (j < 43)
+							else if (j < 33)
 							{
-								if (j == 41) {
+								if (j == 31) {
 									sp2.setPosition((m_window->getView().getCenter().x - 960 + (53 * 6)),
 										(m_window->getView().getCenter().y - 540 + (120 * 6)));
 								}
-								else if (j == 42) {
+								else if (j == 32) {
 									sp2.setPosition((m_window->getView().getCenter().x - 960 + (73 * 6)),
 										(m_window->getView().getCenter().y - 540 + (120 * 6)));
 								}
@@ -201,7 +293,7 @@ void Interface::checkKeys()
 							else if (sp3.getGlobalBounds().contains(worldPosition))
 							{
 								Bin_sprt.setTextureRect(sf::IntRect(20, 0, 15, 15));
-								if(!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+								if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
 								{
 									player->throwObject(i);
 									break;
@@ -210,16 +302,80 @@ void Interface::checkKeys()
 						}
 					}
 				}
+
+				int indexChar = 0;
+				int v1 = 0;
+				int b1 = 0;
+				for (int i = 0; i < 33; i++) { if (player->ObjectsLine[i] == *player->CurrOb) indexChar = i; }
+				for (int i = 0; i < 20; i++)
+				{
+					sf::Sprite sp2;
+					sp2.setTextureRect(sf::IntRect(0, 0, 25, 25));
+					sp2.setScale(6, 6);
+						
+					sp2.setPosition((m_window->getView().getCenter().x - 960 + (235 * 6 + (120 * v1))),
+						(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b1))));
+
+
+					sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window);
+					sf::Vector2f worldPosition = m_window->mapPixelToCoords(mousePosition);
+
+					sf::Sprite sp3(sp2);
+					sp3.setPosition((m_window->getView().getCenter().x - 960 + (33 * 6)),
+						(m_window->getView().getCenter().y - 540 + (120 * 6)));
+
+					if (sp2.getGlobalBounds().contains(worldPosition)
+						&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+						if(currObInChest == nullptr)
+						{
+							player->swapWithChest(m_CurrChest, indexChar, i);
+							delete currObInChest;
+							currObInChest = new int(i);
+							player->setCurrOb(0);
+							break;
+						}
+						if (*currObInChest != i)
+						{
+							m_CurrChest->swapOB(*currObInChest, i);
+							delete currObInChest;
+							currObInChest = new int(i);
+							break;
+						}
+					}
+					else if (sp3.getGlobalBounds().contains(worldPosition) && currObInChest != nullptr)
+					{
+						Bin_sprt.setTextureRect(sf::IntRect(20, 0, 15, 15));
+						if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+						{
+							m_CurrChest->throwObject(*currObInChest);
+							break;
+						}
+					}
+					v1++;
+					if (v1 == 4) { v1 = 0; b1++; }
+				}
+				
 			}
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) { InventIsSwap = 0; }
 		}
 	}
+	
+	m_KEYflags->MouseL = 0;
+	m_KEYflags->KeyR = 0;
+	m_KEYflags->x = sf::Mouse::getPosition().x;
+	m_KEYflags->y = sf::Mouse::getPosition().y;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) { m_KEYflags->KeyR = 1; }
+	if (InterfStat == DEFAULT)
+	{
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { m_KEYflags->MouseL = 1; }
+	}
 }
 
-void Interface::checkAll()
+void Interface::checkAll(std::list<Chest*>& CHESTS)
 {
 	
-	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) { ButtonMpressed = 0; ButtonMpressed2 = 0; }
+	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) { ButtonMpressed = 0; ButtonMpressed2 = 0; ButtonMpressed3 = 0; }
 	if(TABBED == 0)
 	{
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
@@ -233,6 +389,9 @@ void Interface::checkAll()
 				InterfStat = DEFAULT;
 				player->setCurrOb(0);
 				InventIsSwap = 0;
+				m_CurrChest = nullptr;
+				if (currObInChest != nullptr)  delete currObInChest;
+				currObInChest = nullptr;
 			}
 			TABBED = 1;
 		}
@@ -242,6 +401,43 @@ void Interface::checkAll()
 		{
 			TABBED = 0;
 		}
+
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window);
+	sf::Vector2f worldPosition = m_window->mapPixelToCoords(mousePosition);
+
+	for (auto it = CHESTS.begin(); it != CHESTS.end(); it++)
+	{
+		Chest* ch = *it;
+		sf::Sprite tmpSp = ch->getSprite();
+		tmpSp.setScale(6, 6);
+		tmpSp.setTextureRect(sf::IntRect(0, 0, 100, 100));
+		tmpSp.setOrigin(40, 40);
+
+		sf::Sprite sp = player->getSprite();
+		sp.setPosition(player->getSprite().getPosition().x, player->getSprite().getPosition().y + (16 * 6));
+		sp.setOrigin(4, 16);
+
+		if(InterfStat == DEFAULT
+			&& sp.getGlobalBounds().intersects(tmpSp.getGlobalBounds())
+			&& ButtonMpressed3 == 0 && sf::Mouse::isButtonPressed(sf::Mouse::Left)
+			&& ch->getSprite().getGlobalBounds().contains(worldPosition))
+		{
+			m_CurrChest = *it;
+			ButtonMpressed3 = 1;
+			InterfStat = InterfaceStatus::INVENTORY;
+		}
+		if(InterfStat == INVENTORY 
+			&& m_CurrChest != nullptr && m_CurrChest == *it
+			&& !sp.getGlobalBounds().intersects(tmpSp.getGlobalBounds()))
+		{
+			InterfStat = DEFAULT;
+			InventIsSwap = 0;
+			m_CurrChest = nullptr;
+			if (currObInChest != nullptr)  delete currObInChest;
+			currObInChest = nullptr;
+		}
+	}
+
 }
 
 void Interface::draw(std::list<Object*>& OBJECTS)
@@ -266,8 +462,8 @@ void Interface::draw(std::list<Object*>& OBJECTS)
 			miniInfo.setCharacterSize(22);
 
 			sf::Sprite CURRSP = SprtPTR->getPresentSprite();
-			CURRSP.setPosition((m_window->getView().getCenter().x - 960 + (3 * 6) + 4),
-				(m_window->getView().getCenter().y - 540 + (162 * 6)) + 5 * 6);
+			CURRSP.setPosition((m_window->getView().getCenter().x - 960 + (3 * 6)),
+				(m_window->getView().getCenter().y - 540 + (162 * 6)));
 			m_window->draw(CURRSP);
 			m_window->draw(miniInfo);
 		}
@@ -282,6 +478,7 @@ void Interface::draw(std::list<Object*>& OBJECTS)
 			m_window->draw(Invnt_sprt);
 		}
 
+		//Getting objects from the ground
 		sf::Sprite sp = player->getSprite();
 		sp.setTextureRect(sf::IntRect(0, 0, 40, 54));
 		sp.setOrigin(20, 16);
@@ -322,73 +519,79 @@ void Interface::draw(std::list<Object*>& OBJECTS)
 
 		if (PRESSED == 1 || InterfStat == INVENTORY)
 		{
-
+			m_window->draw(Line_sprt);
 			if (InterfStat == INVENTORY)
 			{
+				if(m_CurrChest != nullptr)
+				{
+					ChestIntf_sprt.setPosition(m_window->getView().getCenter().x - 960, m_window->getView().getCenter().y - 540);
+					m_window->draw(ChestIntf_sprt);
+					if (currObInChest != nullptr)
+					{
+						int v1 = 0;
+						int b1 = 0;
+						for (int i = 0; i < 20; i++)
+						{
+							Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (235 * 6 + (120 * v1))),
+								(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b1))));
+							if (*currObInChest == i) { m_window->draw(Curr_sprt); }
+							if (m_CurrChest->getArray()[i] != nullptr)
+							{
+								bool IsSwap = 0;
+								if (InventIsSwap && *currObInChest == i) { IsSwap = 1; }
+								if (!IsSwap)
+								{
+									m_CurrChest[i].getPresentSprite().setPosition((m_window->getView().getCenter().x - 960 + (240 * 6) + (120 * v1)),
+										(m_window->getView().getCenter().y - 540 + (45 * 6) + (120 * b1)));
+								}
+								m_window->draw(m_CurrChest[i].getPresentSprite());
+							}
+							v1++;
+							if (v1 == 4) { v1 = 0; b1++; }
+						}
+					}
+				}
 				Bin_sprt.setPosition((m_window->getView().getCenter().x - 960 + (38 * 6)),
 					(m_window->getView().getCenter().y - 540 + (125 * 6)));
 				m_window->draw(Bin_sprt);
-			{
-				int b = 0;
-				int v = 0;
-				for (int i = 0; i < 43; i++)
-				{
-					if (player->CurrOb == &player->ObjectsLine[i])
+				//Red object icon
+				if(currObInChest == nullptr){
+					int b = 0;
+					int v = 0;
+					for (int i = 6; i < 33; i++)
 					{
-						if (i < 6)
+						if (player->CurrOb == &player->ObjectsLine[i])
 						{
-							Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (98 * 6) + (120 * i)),
-								(m_window->getView().getCenter().y - 540 + (155 * 6)));
-						}
-						else if (i < 41)
-						{
-							Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (118 * 6 + (120 * v))),
-								(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b))));
-						}
-						else if (i < 43)
-						{
-							if (i == 41) { Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (53 * 6)),
-									(m_window->getView().getCenter().y - 540 + (120 * 6)));
+							if (i < 31)
+							{
+								Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (118 * 6 + (120 * v))),
+									(m_window->getView().getCenter().y - 540 + (40 * 6 + (120 * b))));
 							}
-							else if (i == 42) { Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (73 * 6)),
-									(m_window->getView().getCenter().y - 540 + (120 * 6))); 
-							}
+							else if (i < 33)
+							{
+								if (i == 31) {
+									Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (53 * 6)),
+										(m_window->getView().getCenter().y - 540 + (120 * 6)));
+								}
+								else if (i == 32) {
+									Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (73 * 6)),
+										(m_window->getView().getCenter().y - 540 + (120 * 6)));
+								}
 
+							}
+							m_window->draw(Curr_sprt);
+							break;
 						}
-						m_window->draw(Curr_sprt);
-						break;
-					}
-					if(i >= 6 && i < 41)
-					{
-						v++;
-						if (v == 5) { v = 0; b++; }
+						if (i >= 6 && i < 31)
+						{
+							v++;
+							if (v == 5) { v = 0; b++; }
+						}
 					}
 				}
-			}
-
-			m_window->draw(Line_sprt);
-			for (int i = 0; i < 6; i++)
-			{
-				if (player->ObjectsLine[i] != nullptr)
-				{
-					bool IsSwap = 0;
-					if (InventIsSwap && player->CurrOb == &player->ObjectsLine[i]) { IsSwap = 1; }
-					if (!IsSwap)
-					{
-						player->ObjectsLine[i]->getPresentSprite().setPosition((m_window->getView().getCenter().x - 960 + (103 * 6 + (120 * i)) + 4),
-							(m_window->getView().getCenter().y - 540 + (160 * 6)) + 5 * 6);
-					}
-					if (player->ObjectsLine[i]->getObStat() == Object::INPLAYER)
-					{
-						m_window->draw(player->ObjectsLine[i]->getPresentSprite());
-					}
-					else player->ObjectsLine[i]->draw();
-				}
-			}
-
 				int b = 0;
 				int v = 0;
-				for (int i = 6; i < 41; i++)
+				for (int i = 6; i < 31; i++)
 				{
 					if (player->ObjectsLine[i] != nullptr)
 					{
@@ -403,6 +606,36 @@ void Interface::draw(std::list<Object*>& OBJECTS)
 					}
 					v++;
 					if (v == 5) { v = 0; b++; }
+				}
+			}
+
+			//Object line
+			for (int i = 0; i < 6; i++)
+			{
+				if (player->CurrOb == &player->ObjectsLine[i] && currObInChest == nullptr)
+				{
+					Curr_sprt.setPosition((m_window->getView().getCenter().x - 960 + (98 * 6) + (120 * i)),
+						(m_window->getView().getCenter().y - 540 + (155 * 6)));
+					m_window->draw(Curr_sprt);
+					break;
+				}
+			}
+			for (int i = 0; i < 6; i++)
+			{
+				if (player->ObjectsLine[i] != nullptr)
+				{
+					bool IsSwap = 0;
+					if (InventIsSwap && player->CurrOb == &player->ObjectsLine[i] && currObInChest == nullptr) { IsSwap = 1; }
+					if (!IsSwap)
+					{
+						player->ObjectsLine[i]->getPresentSprite().setPosition((m_window->getView().getCenter().x - 960 + (103 * 6 + (120 * i))),
+							(m_window->getView().getCenter().y - 540 + (160 * 6)));
+					}
+					if (player->ObjectsLine[i]->getObStat() == Object::INPLAYER)
+					{
+						m_window->draw(player->ObjectsLine[i]->getPresentSprite());
+					}
+					else player->ObjectsLine[i]->draw();
 				}
 			}
 		}

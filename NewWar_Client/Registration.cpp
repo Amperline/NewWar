@@ -3,7 +3,7 @@
 
 bool Registration(sf::RenderWindow* window, sf::TcpSocket* connector)
 {
-    sf::IpAddress s_ipAdrres("95.134.106.144");
+    sf::IpAddress s_ipAdrres("");
     sf::IpAddress l_ipAdrres("127.0.0.1");
     unsigned short s_port = 4097;
 

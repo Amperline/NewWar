@@ -5,6 +5,9 @@
 Weapon::Weapon(sf::RenderWindow* window, std::list<Ammo*>* ammos, std::string name, ObjectStatus obStat, WeaponType type, LEVEL level, sf::Vector2f normalScale, sf::Vector2f startPos)
 	:Object(window, "resource/images/Weapon/Weapons", name, obStat, normalScale, m_scalePresent), Type(type), m_ammos(ammos), lvl(level)
 {
+	LifeStat = ALIFE;
+	setDeathAble(0);
+
 	if (Type == Pistol)
 	{
 
@@ -18,7 +21,7 @@ Weapon::Weapon(sf::RenderWindow* window, std::list<Ammo*>* ammos, std::string na
 			m_sprt.setOrigin(3, 11);
 			RightSide = sf::IntRect(0, 0, 6, 18);
 			LeftSide = sf::IntRect(6, 0, -6, 18);
-			m_sprtPresent.setOrigin(0, 18);
+			m_sprtPresent.setOrigin(-7, 19);
 		}
 		else if(lvl == Provecta)
 		{
@@ -27,7 +30,7 @@ Weapon::Weapon(sf::RenderWindow* window, std::list<Ammo*>* ammos, std::string na
 			m_sprt.setOrigin(3, 14);
 			RightSide = sf::IntRect(7, 0, 6, 19);
 			LeftSide = sf::IntRect(13, 0, -6, 19);
-			m_sprtPresent.setOrigin(0, 19);
+			m_sprtPresent.setOrigin(-7, 20);
 		}
 		else if (lvl == Electi)
 		{
@@ -36,7 +39,7 @@ Weapon::Weapon(sf::RenderWindow* window, std::list<Ammo*>* ammos, std::string na
 			m_sprt.setOrigin(3, 14);
 			RightSide = sf::IntRect(14, 0, 6, 19);
 			LeftSide = sf::IntRect(20, 0, -6, 19);
-			m_sprtPresent.setOrigin(0, 19);
+			m_sprtPresent.setOrigin(-7, 20);
 		}
 	}
 	else if (Type == MachineGun)
@@ -58,40 +61,42 @@ Weapon::Weapon(sf::RenderWindow* window, std::list<Ammo*>* ammos, std::string na
 
 	m_sprt.setTextureRect(RightSide);
 	m_sprtPresent.setTextureRect(RightSide);
-	m_sprtPresent.setScale(4.4, 4.4);
+	m_sprtPresent.setScale(4.3, 4.3);
 	m_sprtPresent.setRotation(90);
+	groundPos = startPos;
+	m_sprt.setPosition(startPos);
 }
 
 void Weapon::checkAll(float time)
 {
 	Object::checkAll(time);
 
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window);
-	sf::Vector2f worldPosition = m_window->mapPixelToCoords(mousePosition);
-	sf::Vector2f direction = worldPosition - m_sprt.getPosition();
-	float angleRadians = std::atan2(direction.y, direction.x);
-	float angleDegrees = angleRadians * 180 / PI;
-	sf::Vector2f plPos(m_sprt.getGlobalBounds().left, m_sprt.getGlobalBounds().top);
-	m_sprt.setRotation(angleDegrees + 90);
-
-	float temprAngle = m_sprt.getRotation();
-	if (temprAngle >= 0 && temprAngle < 180)
-	{
-		m_sprt.setTextureRect(RightSide);
-	}
-	else
-	{
-		m_sprt.setTextureRect(LeftSide);
-	}
 	if(ObStat == INPLAYER)
 	{
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window);
+		sf::Vector2f worldPosition = m_window->mapPixelToCoords(mousePosition);
+		sf::Vector2f direction = worldPosition - m_sprt.getPosition();
+		float angleRadians = std::atan2(direction.y, direction.x);
+		float angleDegrees = angleRadians * 180 / PI;
+		sf::Vector2f plPos(m_sprt.getGlobalBounds().left, m_sprt.getGlobalBounds().top);
+		m_sprt.setRotation(angleDegrees + 90);
+
+		float temprAngle = m_sprt.getRotation();
+		if (temprAngle >= 0 && temprAngle < 180)
+		{
+			m_sprt.setTextureRect(RightSide);
+		}
+		else
+		{
+			m_sprt.setTextureRect(LeftSide);
+		}
+		if(m_KEYflags->KeyR)
 		{
 			Reload = 1;
 		}
 		if (AmmoVal < AmmoValMax && Reload == 1)
 		{
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			if (m_KEYflags->MouseL)
 			{
 				ReloadTimer.restart();
 			}
@@ -101,7 +106,7 @@ void Weapon::checkAll(float time)
 				ReloadTimer.restart();
 			}
 		}
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (m_KEYflags->MouseL)
 		{
 			if (FireTimer.getElapsedTime().asMilliseconds() > timeR)
 			{
@@ -130,6 +135,8 @@ void Weapon::checkAll(float time)
 	}
 	else
 	{
+		m_sprt.setTextureRect(RightSide);
+		m_sprt.setRotation(90);
 		Reload = 0;
 	}
 }

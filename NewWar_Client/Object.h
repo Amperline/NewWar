@@ -1,5 +1,6 @@
 #pragma once
 #include <NewWar/NewWarLib.h>
+#include "FlagsStruct.h"
 
 class Object
 {
@@ -17,8 +18,11 @@ public:
 		DEAD
 	};
 protected:
+	KeyFlags* m_KEYflags = nullptr;
+
 	LIFE_STATUS LifeStat;
 	std::string Name;
+	sf::Clock LifeTimer;
 
 	sf::Image m_img;
 	sf::Texture m_txtr;
@@ -36,6 +40,7 @@ protected:
 	bool AnimGround;
 	bool groundPause = 0;
 
+	bool ClockLife = 0;
 	bool DeathAble = 1;
 	bool END;
 	int hp;
@@ -54,8 +59,10 @@ public:
 	int& getHP() { return hp; }
 	void death();
 	bool getEnd() { return END; }
+	void setClockLife(bool val) { ClockLife = val; }
 	virtual void checkDeath();
 	void setGrPause(bool val) { groundPause = val; }
+	void setKeyflags(KeyFlags* KeyFlags) { m_KEYflags = KeyFlags; }
 	
 	sf::Vector2f& getGroundPos() { return groundPos; }
 

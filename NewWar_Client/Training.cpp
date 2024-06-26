@@ -4,22 +4,39 @@
 #include "Resources.h"
 #include "Tree.h"
 #include "Stone.h"
+#include "FlagsStruct.h"
 
-void Training(sf::RenderWindow* window)
+void Training(sf::RenderWindow* window, KeyFlags* flagsKey)
 {
     sf::Clock clock;
     Grass grass(window);
 
+    std::list<Weapon*> WPNS;
     std::list<Ammo*> AMMOS;
     std::list<Resources*> RES;
     std::list<Tree*> TREES;
     std::list<Stone*> STONES;
-
-    Character pl(window, sf::Vector2f(1000, 1000));
+    std::list<Chest*> CHESTS;
+    
     sf::View vTr = window->getView();
+
+    Character pl(window, sf::Vector2f(100, 100));
     Interface m_interface(window, &pl);
-    Weapon CarbineAlpha(window, &AMMOS, "CarbineAlpha",Object::ObjectStatus::INPLAYER, Weapon::WeaponType::Carbine,
-       Weapon::LEVEL::Electi, sf::Vector2f(6, 6), sf::Vector2f(100, 100));
+    
+    pl.setKeyflags(flagsKey);
+    m_interface.setKeyflags(flagsKey);
+
+    WPNS.push_back(new Weapon(window, &AMMOS, "CarbineAlpha", Object::ObjectStatus::GROUND, Weapon::WeaponType::Carbine,
+        Weapon::LEVEL::Initial, sf::Vector2f(6, 6), sf::Vector2f(100, 100)));
+    WPNS.push_back(new Weapon(window, &AMMOS, "CarbineAlpha", Object::ObjectStatus::GROUND, Weapon::WeaponType::Carbine,
+        Weapon::LEVEL::Electi, sf::Vector2f(6, 6), sf::Vector2f(300, 100)));
+    WPNS.push_back(new Weapon(window, &AMMOS, "CarbineAlpha", Object::ObjectStatus::GROUND, Weapon::WeaponType::Carbine,
+        Weapon::LEVEL::Provecta, sf::Vector2f(6, 6), sf::Vector2f(500, 100)));
+
+    CHESTS.push_back(new Chest(window, Object::ObjectStatus::USED, sf::Vector2f(200, 200)));
+
+    
+
     for (int i = 0; i < 20; i++)
     {
         TREES.push_back(new Tree(window, &RES, Tree::SMALL, sf::Vector2f(1000 + (300 * i), 1000), Object::ObjectStatus::USED));
@@ -44,10 +61,6 @@ void Training(sf::RenderWindow* window)
     {
         STONES.push_back(new Stone(window, &RES, Stone::BIG, sf::Vector2f(1000 + (300 * i) + 200, 3500), Object::ObjectStatus::USED));
     }
-    
-    /*RES.push_back(new Resources(window, pl.getSprite().getPosition(), 100, std::string("Stone"), Object::ObjectStatus::GROUND, Resources::ResourceType::STONE));
-    pl.ownObject(*RES.begin());*/
-    pl.ownObject(&CarbineAlpha);
 
     pl.setCurrOb(1);
     while (window->isOpen())
@@ -67,6 +80,7 @@ void Training(sf::RenderWindow* window)
         m_interface.checkKeys();
         pl.checkAll(NormalTime);
 
+        CheckWeapon(WPNS, NormalTime);
         checkAmmoWithOb(AMMOS, TREES);
         checkAmmoWithOb(AMMOS, STONES);
         CheckAmmo(AMMOS, NormalTime);
@@ -80,9 +94,7 @@ void Training(sf::RenderWindow* window)
         checkPlayerWithOb(pl, TREES, NormalTime);
         checkPlayerWithOb(pl, STONES, NormalTime);
         
-
-        CarbineAlpha.checkAll(NormalTime);
-        m_interface.checkAll();
+        m_interface.checkAll(CHESTS);
 
         float x = pl.getSprite().getPosition().x;
         float y = pl.getSprite().getPosition().y;
@@ -94,6 +106,8 @@ void Training(sf::RenderWindow* window)
         grass.draw();
         drawAmmo(AMMOS);
         drawRes(RES);
+        drawWeapon(WPNS);
+        drawChest(CHESTS, window, m_interface);
 
         Object* ValCrrOb = *pl.CurrOb;
         if(checkPlANDside(pl, TREES) || checkPlANDside(pl, STONES))
@@ -143,6 +157,10 @@ void Training(sf::RenderWindow* window)
         
         std::list<Object*> Objects;
         for(auto i = RES.begin(); i != RES.end(); i++)
+        {
+            Objects.push_back(*i);
+        }
+        for (auto i = WPNS.begin(); i != WPNS.end(); i++)
         {
             Objects.push_back(*i);
         }

@@ -3,7 +3,9 @@
 #include <list>
 #include "Object.h"
 #include "Character.h"
+#include "Chest.h"
 #include <NewWar/GameString.h>
+#include "FlagsStruct.h"
 
 class Interface
 {
@@ -15,16 +17,21 @@ public:
 		SETTINGS
 	};
 private:
+	int* currObInChest = nullptr;
+	Character* player = nullptr;
+	KeyFlags* m_KEYflags;
+	Chest* m_CurrChest = nullptr;
 	InterfaceStatus InterfStat = DEFAULT;
 	sf::Clock PressTimer;
 	sf::Clock OwnTimer;
 
-	bool TABBED;
-	bool PRESSED;
-	bool PERMISSION;
+	bool TABBED = 0;
+	bool PRESSED = 0;
+	bool PERMISSION = 0;
 
 	bool ButtonMpressed = 0;
 	bool ButtonMpressed2 = 0;
+	bool ButtonMpressed3 = 1;
 	bool InventIsSwap = 0;
 
 	sf::RenderWindow* m_window;
@@ -52,12 +59,17 @@ private:
 	sf::Image CURR_img;
 	sf::Texture CURR_txtr;
 	sf::Sprite CURR_sprt;
-	Character* player;
+
+	sf::Image ChestIntf_img;
+	sf::Texture ChestIntf_txtr;
+	sf::Sprite ChestIntf_sprt;
+
 public:
 	Interface(sf::RenderWindow* window, Character* pl);
 	InterfaceStatus& getStatus() { return InterfStat; }
+	void setKeyflags(KeyFlags* KeyFlags) { m_KEYflags = KeyFlags; }
 	void checkKeys();
-	void checkAll();
+	void checkAll(std::list<Chest*>& CHESTS);
 	void draw(std::list<Object*>& OBJECTS);
 };
 

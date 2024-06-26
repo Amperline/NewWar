@@ -52,7 +52,7 @@ Character::Character(sf::RenderWindow* window, sf::Vector2f startPos)
 	CarryingRight[3] = sf::IntRect(20 + 60, 102, 20, 34);
 
 	m_sprt.setTextureRect(NormalDown[0]);
-	for (int i = 0; i < 36; i++)
+	for (int i = 0; i < 33; i++)
 		ObjectsLine[i] = nullptr;
 	CurrOb = &ObjectsLine[1];
 }
@@ -210,16 +210,16 @@ void Character::setCurrOb(short index)
 
 bool Character::ownObject(Object* ob)
 {
-	for (int i = 1; i < 43; i++)
+	for (int i = 1; i < 33; i++)
 	{
 		if (i == 1)
 		{
-			
 			if (ob->identify() == "Main")
 			{
-				throwObject(2);
+				throwObject(1);
 				ObjectsLine[1] = ob;
 				ob->setObStat(Object::INVENT);
+				ob->setKeyflags(m_KEYflags);
 				return 1;
 			}
 		}
@@ -230,6 +230,7 @@ bool Character::ownObject(Object* ob)
 				throwObject(2);
 				ObjectsLine[2] = ob;
 				ob->setObStat(Object::INVENT);
+				ob->setKeyflags(m_KEYflags);
 				return 1;
 			}
 		}
@@ -238,7 +239,7 @@ bool Character::ownObject(Object* ob)
 			if (ob->identify() == "wood"
 				|| ob->identify() == "stone")
 			{
-				for(i = 6; i < 40; i++)
+				for(i = 6; i < 31; i++)
 				{
 					if (ObjectsLine[i] != nullptr)
 					{
@@ -256,6 +257,7 @@ bool Character::ownObject(Object* ob)
 									if(ownObject(res2))
 									{
 										res2->setObStat(Object::ObjectStatus::INVENT);
+										res2->setKeyflags(m_KEYflags);
 										return 1;
 									}
 								}
@@ -273,6 +275,7 @@ bool Character::ownObject(Object* ob)
 					{
 						ObjectsLine[i] = ob;
 						ob->setObStat(Object::INVENT);
+						ob->setKeyflags(m_KEYflags);
 						return 1;
 					}
 				}
@@ -296,7 +299,17 @@ void Character::throwObject(short index)
 {
 	if (ObjectsLine[index] != nullptr)
 	{
+		ObjectsLine[index]->setKeyflags(nullptr);
 		ObjectsLine[index]->setObStat(Object::GROUND);
+		ObjectsLine[index]->getGroundPos().x = m_sprt.getPosition().x;
+		ObjectsLine[index]->getGroundPos().y = m_sprt.getPosition().y + 50;
 		ObjectsLine[index] = nullptr;
 	}
+}
+
+void Character::swapWithChest(Chest* chest, int indChar, int indChest)
+{
+	Object* ptr = chest->getObArray().at(indChest);
+	chest->getObArray().at(indChest) = ObjectsLine[indChar];
+	ObjectsLine[indChar] = ptr;
 }

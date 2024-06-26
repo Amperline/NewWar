@@ -10,6 +10,7 @@ Object::Object(sf::RenderWindow* window, std::string fileName, std::string name,
 	m_sprtPresent = m_sprt;
 	m_sprt.setScale(m_scaleNorm);
 	m_sprtPresent.setScale(m_scalePresent);
+	LifeTimer.restart();
 }
 
 void Object::death()
@@ -21,6 +22,14 @@ void Object::checkDeath()
 {
 	if (LifeStat == ALIFE)
 	{
+		if (ObStat == INPLAYER || ObStat == INVENT) LifeTimer.restart();
+		if (ObStat == GROUND && ClockLife == 1)
+		{
+			if (LifeTimer.getElapsedTime().asSeconds() > 60)
+			{
+				LifeStat = DEAD;
+			}
+		}
 		if (hp <= 0)
 		{
 			LifeStat = DEAD;

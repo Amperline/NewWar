@@ -42,4 +42,3 @@ public:
 	void draw();
 	~Ammo();
 };
-
